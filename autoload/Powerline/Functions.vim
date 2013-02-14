@@ -131,10 +131,15 @@ function! Powerline#Functions#GetWSMarker() " {{{
   " Return '...' if trailing white space is detected
   " Return '' otherwise
   if ! exists("b:statusline_trailing_space_warning")
+    let b:statusline_tab_warning = '⇥ '
+    let b:statusline_trailing_space_warning = ''
+
+    if search('\t', 'nw') != 0
+      let b:statusline_trailing_space_warning = b:statusline_tab_warning
+    endif
+
     if search('\s$', 'nw') != 0
-      let b:statusline_trailing_space_warning = ' … '
-    else
-      let b:statusline_trailing_space_warning = ''
+      let b:statusline_trailing_space_warning = b:statusline_trailing_space_warning . ' … '
     endif
   endif
   return b:statusline_trailing_space_warning
